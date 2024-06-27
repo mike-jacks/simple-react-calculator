@@ -1,0 +1,23 @@
+.calculator {
+  display: grid;
+  grid-template: 2em 1fr / 1fr;
+  gap: 20px;
+  background-color: rgb(25, 25, 25);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.display {
+  background-color: #0f1d32;
+  border-radius: 10px;
+  text-align: right;
+  padding-top: 8px;
+  padding-right: 10px;
+  height: 40px;
+}
+
+.buttons {
+  display: grid;
+  grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+  gap: 15px;
+}
