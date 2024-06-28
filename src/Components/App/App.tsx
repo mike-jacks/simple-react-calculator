@@ -11,7 +11,7 @@ function App() {
         <body>
           <Calculator />
         </body>
-        <footer>
+        <footer className={styles.footer}>
           <p>Created by Mike Jacks 2024</p>
         </footer>
       </div>
