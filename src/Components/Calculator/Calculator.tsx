@@ -13,7 +13,7 @@ export default function Calculator() {
 
   const buttons = ["AC", "+/-", "%", "/", "7", "8", "9", "X", "4", "5", "6", "-", "1", "2", "3", "+", "0", ".", "="];
 
-  function calculate(num: number, operator: string, strNum: string) {
+  function calculate(num: number, operator: string, strNum: string): number {
     const expression = `${num} ${operator} ${strNum}`;
     return new Function("return " + expression)();
   }
@@ -62,14 +62,14 @@ export default function Calculator() {
           if (operator === null) {
             setOperator(value);
             setCalcValue(Number(currentValue));
-            setCurrentValue(String("0"));
+            setCurrentValue("0");
+            setHasDot(false);
             setOperatorHit(true);
-            setDisplay(String(calcValue));
           } else {
             setCalcValue((prevCalcValue) => calculate(prevCalcValue, operator, currentValue));
             setCurrentValue("0");
+            setHasDot(false);
             setOperator(value);
-            setDisplay(String(calcValue));
           }
           break;
         case "=":
@@ -79,6 +79,7 @@ export default function Calculator() {
           setCalcValue((prevCalcValue) => calculate(prevCalcValue, operator, currentValue));
           setCurrentValue("0");
           setDisplay(String(calcValue));
+          setOperator(null);
           break;
         default:
           if (operatorHit) {
@@ -88,11 +89,20 @@ export default function Calculator() {
           if (currentValue.length >= 28) {
             break;
           }
-          if (hasDot && !String(currentValue).includes(".")) {
-            setCurrentValue((prevValue) => prevValue + "." + value);
+          if (hasDot) {
+            setCurrentValue((prevValue) => {
+              let result = "";
+              if (prevValue.includes(".")) {
+                result = prevValue + value;
+              } else {
+                result = prevValue + "." + value;
+              }
+              return result;
+            });
           } else {
             if (currentValue === "0") {
               setCurrentValue(value);
+              setDisplay(value);
               break;
             }
             setCurrentValue((prevValue) => prevValue + value);
